@@ -1,5 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
+
+import { DndContainer } from './Containers/DndContainer/index.tsx';
+
 import './App.css';
 
 function App() {
@@ -19,6 +22,9 @@ function App() {
           Learn React
         </a>
       </header>
+      <main>
+        <DndContainer />
+      </main>
     </div>
   );
 }
