@@ -103,13 +103,14 @@ export class DndContainer extends React.PureComponent<any, any> {
                 [newFinishColumn.id]: newFinishColumn
             }
         }
-        
+
         this.setState(newState);
     };
 
     public render() {
         const { tasks, columns, columnOrder } = this.state;
-
+        //9
+        
         return (
             <Container>
                 <DragDropContext
