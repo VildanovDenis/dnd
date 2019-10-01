@@ -1,4 +1,4 @@
-export const initialData: any = {
+export const initialData = {
     tasks: {
         'task-1': {
             id: 'task-1',

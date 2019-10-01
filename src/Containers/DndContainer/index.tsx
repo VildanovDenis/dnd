@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult, DraggableLocation } from 'react-beautiful-dnd';
+
+import { DndContainerProps, DndContainerState } from './types';
 
 import { DndColumn } from '../DndColumn';
 
 import { initialData } from '../../Data/dndData';
+import { Column } from '../../Data/types';
 
 const Container = styled.div`
     display: grid;
@@ -12,8 +15,8 @@ const Container = styled.div`
     grid-gap: 20px;
 `;
 
-export class DndContainer extends React.PureComponent<any, any> {
-    constructor(props: any) {
+export class DndContainer extends React.PureComponent<DndContainerProps, DndContainerState> {
+    constructor(props: DndContainerProps) {
         super(props);
 
         this.state = {
@@ -25,12 +28,12 @@ export class DndContainer extends React.PureComponent<any, any> {
         this.onDragUpdate = this.onDragUpdate.bind(this);
     };
 
-    public onDragStart = () => {
+    private onDragStart() {
         document.body.style.color = 'red';
         document.body.style.transition = 'background-color 0.3s ease';
     }
 
-    public onDragUpdate = (update: any) => {
+    private onDragUpdate(update: any) {
         const { destination } = update;
         const opacity = destination
             ? destination.index / Object.keys(this.state.tasks).length
@@ -39,47 +42,76 @@ export class DndContainer extends React.PureComponent<any, any> {
         document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`;
     }
 
-    public onDragEnd = (result: any) => {
+    private onDragEnd(result: DropResult): void {
         document.body.style.color = 'inherit';
         document.body.style.backgroundColor = 'inherit';
 
+        const { destination, source } = result;
+
+        if (!result.destination) {
+            return;
+        }
+
+        if (this.isDragPositionEqual(result.destination, source)) {
+            return;
+        }
+
+        const startColumn: Column = this.state.columns[source.droppableId];
+        const finishColumn: Column = this.state.columns[result.destination.droppableId];
+
+        return startColumn === finishColumn
+            ? this.dragInsideColumn(result)
+            : this.dragOutsideColumn(result);
+    };
+
+    private isDragPositionEqual(destination: DraggableLocation, source: DraggableLocation): boolean {
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private dragInsideColumn(result: DropResult): void {
         const { destination, source, draggableId } = result;
 
         if (!destination) {
             return;
         }
 
-        if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-        ) {
-            return
-        }
+        const column: Column = this.state.columns[destination.droppableId];
 
-        const startColumn = this.state.columns[source.droppableId];
-        const finishColumn = this.state.columns[destination.droppableId];
+        const newTasksIds = [...column.tasksIds];
 
-        if (startColumn === finishColumn) {
-            const newTasksIds = Array.from(startColumn.tasksIds);
-            newTasksIds.splice(source.index, 1);
-            newTasksIds.splice(destination.index, 0, draggableId);
+        newTasksIds.splice(source.index, 1);
+        newTasksIds.splice(destination.index, 0, draggableId);
 
-            const newColumn = {
-                ...startColumn,
-                tasksIds: newTasksIds
-            };
+        const newColumn = {
+            ...column,
+            tasksIds: newTasksIds
+        };
 
-            const newState = {
-                ...this.state,
-                columns: {
-                    ...this.state.columns,
-                    [newColumn.id]: newColumn, 
-                }
-            };
+        this.setState({
+            ...this.state,
+            columns: {
+                ...this.state.columns,
+                [newColumn.id]: newColumn, 
+            }
+        });
+    }
 
-            this.setState(newState);
+    private dragOutsideColumn(result: DropResult): void {
+        const { destination, source, draggableId } = result;
+
+        if (!destination) {
             return;
         }
+
+        const startColumn: Column = this.state.columns[source.droppableId];
+        const finishColumn: Column = this.state.columns[destination.droppableId];
 
         const startTasksIds = Array.from(startColumn.tasksIds);
         startTasksIds.splice(source.index, 1);
@@ -105,7 +137,7 @@ export class DndContainer extends React.PureComponent<any, any> {
         }
 
         this.setState(newState);
-    };
+    }
 
     public render() {
         const { tasks, columns, columnOrder } = this.state;
