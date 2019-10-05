@@ -16,7 +16,8 @@ const Column = styled.div`
     flex-grow: 1;
     padding: 8px;
     transition: background-color 0.3s ease;
-    background-color: ${(props: any) => props.isDraggingOver ? 'skyblue' : 'white'}
+    background-color: ${(props: any) => props.isDraggingOver ? 'skyblue' : 'white'};
+    overflow-y: auto;
 `;
 
 const Title = styled.h3`

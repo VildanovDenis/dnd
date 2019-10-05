@@ -1,4 +1,7 @@
-export const initialData = {
+import { InitialData, Tasks, Task, Columns, Column, ColumnOrder } from "./types"
+
+
+export const initialData: InitialData = {
     tasks: {
         'task-1': {
             id: 'task-1',
@@ -34,13 +37,66 @@ export const initialData = {
         'column-2': {
             id: 'column-2',
             title: 'done',
-            tasksIds: ['task-4', 'task-5', 'task-6']
+            tasksIds: ['task-4', 'task-5']
         },
         'column-3': {
             id: 'column-3',
             title: 'process',
-            tasksIds: []
+            tasksIds: ['task-6']
         }
     },
     columnOrder: ['column-1', 'column-2', 'column-3']
+}
+
+export const createSomeData = (numBerOfTasks: number, numberOfColumns: number): InitialData => {
+    const iterableArrForTasks: Array<void> = new Array(numBerOfTasks).fill(4);
+
+    const generatedTasks: Tasks = iterableArrForTasks.reduce((acc: Tasks, item: void, index: number): Tasks => {
+        const taskId: string = `Task-${index}`;
+        const taskContent: string = `Some task ${index}`
+
+        const newTask: Task = {
+            id: taskId,
+            content: taskContent
+        };
+
+        return {...acc, [taskId]: newTask}
+    }, {});
+
+    const tasksIds: Array<string> = Object.keys(generatedTasks);
+
+    const iterableColumns: Array<void> = new Array(numberOfColumns).fill(4);
+    const generatedColumns: Columns = iterableColumns.reduce((acc: Columns, item: void, index: number): Columns => {
+        const columnId: string = `column-${index}`;
+        const columnTitle: string = `column ${index} title`;
+
+        if (index === 0) {
+            const newColumn: Column = {
+                id: columnId,
+                title: columnTitle,
+                tasksIds: tasksIds
+            };
+
+            return {...acc, [columnId]: newColumn}
+        }
+
+        const newColumn: Column = {
+            id: columnId,
+            title: columnTitle,
+            tasksIds: []
+        };
+
+        return {...acc, [columnId]: newColumn}
+
+    }, {});
+
+    const columnOrder: ColumnOrder = Object.keys(generatedColumns);
+
+    const initialData: InitialData = {
+        tasks: generatedTasks,
+        columns: generatedColumns,
+        columnOrder: columnOrder
+    };
+
+    return initialData
 }

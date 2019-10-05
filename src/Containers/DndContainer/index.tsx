@@ -6,13 +6,16 @@ import { DndContainerProps, DndContainerState } from './types';
 
 import { DndColumn } from '../DndColumn';
 
-import { initialData } from '../../Data/dndData';
+import { initialData, createSomeData } from '../../Data/dndData';
 import { Column } from '../../Data/types';
 
 const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, 250px);
     grid-gap: 20px;
+    width: 100vw;
+    height: 100vh;
+    padding: 25px 40px;
 `;
 
 export class DndContainer extends React.PureComponent<DndContainerProps, DndContainerState> {
@@ -27,6 +30,14 @@ export class DndContainer extends React.PureComponent<DndContainerProps, DndCont
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragUpdate = this.onDragUpdate.bind(this);
     };
+
+    componentDidMount() {
+        const data = createSomeData(44, 4);
+
+        this.setState({
+            ...data
+        });
+    }
 
     private onDragStart() {
         document.body.style.color = 'red';
