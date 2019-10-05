@@ -8,6 +8,10 @@ const Container = styled.div`
     margin-bottom: 8px;
     border-radius: 4px;
     background-color: ${(props: any) => props.isDragging ? 'lightgreen' : 'white'};
+
+    :last-child {
+        margin-bottom: 0;
+    }
 `;
 
 export class DndTask extends React.PureComponent<any, any> {

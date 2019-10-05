@@ -7,15 +7,63 @@ import { DndContainerProps, DndContainerState } from './types';
 import { DndColumn } from '../DndColumn';
 
 import { initialData, createSomeData } from '../../Data/dndData';
-import { Column } from '../../Data/types';
+import { Column, ColumnOrder, Columns } from '../../Data/types';
 
 const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, 250px);
+    grid-row: 1;
     grid-gap: 20px;
     width: 100vw;
+    max-width: 100vw;
     height: 100vh;
     padding: 25px 40px;
+    overflow-x: auto;
+`;
+
+const ButtonWrapper = styled.div`
+    padding: 8px;
+`;
+
+const Button = styled.button`
+    position: relative;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    border-radius: 4px;
+    background-color: lightgray;
+    opacity: 0.2;
+    transition: opacity 0.3s;
+
+    ::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 6px;
+        height: 80px;
+        background-color: gray;
+        border-radius: 3px;
+    }
+
+    ::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%) rotate(90deg);
+        width: 6px;
+        height: 80px;
+        background-color: gray;
+        border-radius: 3px;
+    }
+
+    :hover {
+        opacity: 0.5;
+    }
 `;
 
 export class DndContainer extends React.PureComponent<DndContainerProps, DndContainerState> {
@@ -29,14 +77,38 @@ export class DndContainer extends React.PureComponent<DndContainerProps, DndCont
         this.onDragEnd = this.onDragEnd.bind(this);
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragUpdate = this.onDragUpdate.bind(this);
+        this.onAddColumnClick = this.onAddColumnClick.bind(this);
     };
 
     componentDidMount() {
-        const data = createSomeData(44, 4);
+        const data = createSomeData(25, 4);
 
         this.setState({
             ...data
         });
+    }
+
+    private onAddColumnClick() {
+        const { columnOrder, columns } = this.state;
+
+        const newColumnId: string = `column-${columnOrder.length}`;
+        const newColumnTitle: string = `column ${columnOrder.length} title`
+        const tasksIds: Array<string> = [];
+
+        const newColumnOrder: ColumnOrder = [...columnOrder, newColumnId];
+        const newColumns: Columns = {
+            ...columns,
+            [newColumnId]: {
+                id: newColumnId,
+                title: newColumnTitle,
+                tasksIds: tasksIds
+            }
+        };
+
+        this.setState({
+            columnOrder: newColumnOrder,
+            columns: newColumns
+        })
     }
 
     private onDragStart() {
@@ -151,8 +223,8 @@ export class DndContainer extends React.PureComponent<DndContainerProps, DndCont
     }
 
     public render() {
-        const { tasks, columns, columnOrder } = this.state;
-        //9
+        const { tasks, columns, columnOrder }: DndContainerState = this.state;
+        const isAddColumnShow: boolean = columnOrder.length < 6;
         
         return (
             <Container>
@@ -169,6 +241,12 @@ export class DndContainer extends React.PureComponent<DndContainerProps, DndCont
                         })
                     }
                 </DragDropContext>
+                {
+                    isAddColumnShow &&
+                    <ButtonWrapper>
+                        <Button onClick={this.onAddColumnClick} />
+                    </ButtonWrapper>
+                }
             </Container>
         )
     }

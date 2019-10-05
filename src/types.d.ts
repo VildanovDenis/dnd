@@ -1,3 +1,3 @@
-export type Dictionary<Value, Key extends string> = {
-    [Key]: Value | undefined;
+export type Dictionary<Value> = {
+    [key: string]: Value;
 };

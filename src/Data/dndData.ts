@@ -49,9 +49,9 @@ export const initialData: InitialData = {
 }
 
 export const createSomeData = (numBerOfTasks: number, numberOfColumns: number): InitialData => {
-    const iterableArrForTasks: Array<void> = new Array(numBerOfTasks).fill(4);
+    const iterableArrForTasks: Array<number> = new Array(numBerOfTasks).fill(4);
 
-    const generatedTasks: Tasks = iterableArrForTasks.reduce((acc: Tasks, item: void, index: number): Tasks => {
+    const generatedTasks: Tasks = iterableArrForTasks.reduce((acc: Tasks, _: number, index: number): Tasks => {
         const taskId: string = `Task-${index}`;
         const taskContent: string = `Some task ${index}`
 
@@ -65,8 +65,8 @@ export const createSomeData = (numBerOfTasks: number, numberOfColumns: number): 
 
     const tasksIds: Array<string> = Object.keys(generatedTasks);
 
-    const iterableColumns: Array<void> = new Array(numberOfColumns).fill(4);
-    const generatedColumns: Columns = iterableColumns.reduce((acc: Columns, item: void, index: number): Columns => {
+    const iterableColumns: Array<number> = new Array(numberOfColumns).fill(4);
+    const generatedColumns: Columns = iterableColumns.reduce((acc: Columns, _: number, index: number): Columns => {
         const columnId: string = `column-${index}`;
         const columnTitle: string = `column ${index} title`;
 
