@@ -15,6 +15,7 @@ const Container = styled.div`
     margin: 8px;
     border: 1px solid lightgray;
     border-radius: 4px;
+    background-color: white;
 `;
 
 const Column = styled.div`
