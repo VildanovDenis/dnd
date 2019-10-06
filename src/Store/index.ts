@@ -1,8 +1,11 @@
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-const allReducers = combineReducers({
+import { scrumDataReducer } from './Reducer/scrumData';
 
+const allReducers = combineReducers({
+    scrumDataReducer
 });
 
 const someActionsListener = (state: any, action: any) => {
@@ -19,7 +22,8 @@ const someActionsListener = (state: any, action: any) => {
 
 export const store = createStore(
     someActionsListener,
-    compose(
-        applyMiddleware(thunk),
-    )
+    composeWithDevTools(applyMiddleware(thunk))
 )
+
+// some selector here
+// export const getState = (reduxState) => reduxState;
