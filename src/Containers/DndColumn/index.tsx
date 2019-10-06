@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Droppable } from 'react-beautiful-dnd';
 
+import { DndColumnProps, DndColumnState } from './types';
+import { Task } from '../../Data/types';
+
 import { DndTask } from '../DndTask';
 
 const Container = styled.div`
@@ -33,7 +36,7 @@ const Title = styled.h3`
     white-space: nowrap;
 `;
 
-export class DndColumn extends React.PureComponent<any, any> {
+export class DndColumn extends React.PureComponent<DndColumnProps, DndColumnState> {
     public render() {
         const { column, tasks } = this.props;
 
@@ -49,7 +52,7 @@ export class DndColumn extends React.PureComponent<any, any> {
                             isDraggingOver={shapshot.isDraggingOver}
                         >
 
-                            {tasks.map((task: any, index: number) => (
+                            {tasks.map((task: Task, index: number) => (
                                 <DndTask key={task.id} task={task} index={index}/>
                             ))}
                             {provided.placeholder}

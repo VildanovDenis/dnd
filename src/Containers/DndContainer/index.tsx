@@ -7,7 +7,7 @@ import { DndContainerProps, DndContainerState } from './types';
 import { DndColumn } from '../DndColumn';
 
 import { initialData, createSomeData } from '../../Data/dndData';
-import { Column, ColumnOrder, Columns } from '../../Data/types';
+import { Column, ColumnOrder, Columns, Tasks, Task } from '../../Data/types';
 
 const Container = styled.div`
     display: flex;

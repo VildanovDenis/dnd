@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
+import { DndTaskProps, DndTaskState } from './types';
+
 const Container = styled.div`
     border: 1px solid lightgray;
     padding: 8px;
@@ -14,7 +16,7 @@ const Container = styled.div`
     }
 `;
 
-export class DndTask extends React.PureComponent<any, any> {
+export class DndTask extends React.PureComponent<DndTaskProps, DndTaskState> {
     public render() {
         const { task, index } = this.props;
 
