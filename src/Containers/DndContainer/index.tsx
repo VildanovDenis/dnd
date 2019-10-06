@@ -10,10 +10,7 @@ import { initialData, createSomeData } from '../../Data/dndData';
 import { Column, ColumnOrder, Columns } from '../../Data/types';
 
 const Container = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 250px);
-    grid-row: 1;
-    grid-gap: 20px;
+    display: flex;
     width: 100vw;
     max-width: 100vw;
     height: 100vh;
@@ -22,6 +19,7 @@ const Container = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
+    width: 250px;
     padding: 8px;
 `;
 
