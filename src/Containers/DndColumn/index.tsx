@@ -49,7 +49,7 @@ const Column = styled.div`
 const ColumnHeader = styled.div`
     display: flex;
     flex-direction: row;
-    padding: 8px;
+    padding: 16px 8px 8px;
     margin-bottom: 10px;
 `;
 
