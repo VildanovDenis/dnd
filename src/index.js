@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provided } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import { store } from './Store/index';
 
@@ -9,9 +9,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <Provided store={store}>
+    <Provider store={store}>
         <App />
-    </Provided>,
+    </Provider>,
     document.getElementById('root')
 );
 
