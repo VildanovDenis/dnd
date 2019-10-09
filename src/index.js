@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router';
+import { createBrowserHistory } from "history";
 
 import { store } from './Store/index';
 
@@ -8,9 +10,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+const customHistory = createBrowserHistory();
+
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Router history={customHistory}>
+            <App />
+        </Router>
     </Provider>,
     document.getElementById('root')
 );

@@ -1,9 +1,9 @@
-import { createSomeData } from "../../Data/dndData";
-import { ScrumDataAction } from '../action-types/scrum-data';
+import { createSomeData } from "../../../Data/dndData";
+import { ScrumDataAction } from '../../action-types/scrum-data';
 import { SetScrumData, SetScrumDataStatus } from './types';
-import { ReduxDispatch, StateAction } from "../types";
-import { InitialData } from "../../Data/types";
-import { dataStatuses } from "../../Data/dataStatuses";
+import { ReduxDispatch, StateAction } from "../../types";
+import { InitialData } from "../../../Data/types";
+import { dataStatuses } from "../../../Data/dataStatuses";
 
 export const setScrumData = (data: InitialData): SetScrumData => ({
     type: ScrumDataAction.setScrumData,

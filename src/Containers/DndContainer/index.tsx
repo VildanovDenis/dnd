@@ -16,7 +16,7 @@ import { DndColumn } from '../DndColumn';
 // import { initialData, createSomeData } from '../../Data/dndData';
 import { Column, ColumnOrder, Columns, Task } from '../../Data/types';
 
-import { getScrumData, setScrumData } from '../../Store/Action/scrumData';
+import { getScrumData, setScrumData } from '../../Store/Action/scrum-data';
 
 import { State, ReduxDispatch } from '../../Store/types';
 import { dataStatuses } from '../../Data/dataStatuses';

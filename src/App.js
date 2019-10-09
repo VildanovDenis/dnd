@@ -4,6 +4,7 @@ import React from 'react';
 import { DndContainer } from './Containers/DndContainer/index.tsx';
 
 import './App.css';
+import { Route, Switch } from 'react-router';
 
 function App() {
   return (
@@ -23,7 +24,10 @@ function App() {
         </a>
       </header> */}
       <main>
-        <DndContainer />
+        <Switch>
+          <Route exact path='/' component={DndContainer} />
+          <Route path='/task/:id' component={<div>123123</div>} />
+        </Switch>
       </main>
     </div>
   );

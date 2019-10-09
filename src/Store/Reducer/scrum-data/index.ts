@@ -1,5 +1,5 @@
 import { ScrumDataState } from './types';
-import { ScrumDataActions } from '../../Action/types';
+import { ScrumDataActions } from '../../Action/scrum-data/types';
 import { ScrumDataAction } from '../../action-types/scrum-data';
 import { dataStatuses } from '../../../Data/dataStatuses';
 
