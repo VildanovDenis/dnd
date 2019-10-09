@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import { DragDropContext, DropResult, DraggableLocation } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult, DraggableLocation } from 'react-beautiful-dnd';
 
 import {
     DndContainerProps,
@@ -28,6 +28,12 @@ const Container = styled.div`
     height: 100vh;
     padding: 25px 40px;
     overflow-x: auto;
+`;
+
+const ColumnContainer = styled(Container)`
+    width: auto;
+    height: auto;
+    padding: 0;
 `;
 
 const ButtonWrapper = styled.div`
@@ -248,7 +254,7 @@ export const DndContainer = connect(mapStateToProps, mapDispatchToProps)(
             document.body.style.color = 'inherit';
             document.body.style.backgroundColor = 'inherit';
 
-            const { source } = result; //destination
+            const { source, draggableId, type } = result; //destination
 
             if (!result.destination) {
                 return;
@@ -256,6 +262,21 @@ export const DndContainer = connect(mapStateToProps, mapDispatchToProps)(
 
             if (this.isDragPositionEqual(result.destination, source)) {
                 return;
+            }
+
+            if (type === 'column') {
+                const newColumnOrder = Array.from(this.props.initialData.data.columnOrder);
+                newColumnOrder.splice(source.index, 1);
+                newColumnOrder.splice(result.destination.index, 0, draggableId);
+
+                const newData = {
+                    ...this.props.initialData.data,
+                    columnOrder: newColumnOrder
+                };
+                
+                this.props.setScrumData(newData);
+
+                return
             }
 
             const { data } = this.props.initialData;
@@ -375,22 +396,32 @@ export const DndContainer = connect(mapStateToProps, mapDispatchToProps)(
                         onDragStart={this.onDragStart}
                         onDragUpdate={this.onDragUpdate}
                         onDragEnd={this.onDragEnd}>
-                        {
-                            columnOrder.map((columnId: string, index: number) => {
-                                const column = columns[columnId];
-                                const columnTasks = column.tasksIds.map((taskId: string) => tasks[taskId]);
+                            <Droppable
+                                droppableId='all-columns'
+                                direction='horizontal'
+                                type='column'>
+                                {(provided) => (
+                                    <ColumnContainer {...provided.droppableProps} ref={provided.innerRef}>
+                                        {
+                                            columnOrder.map((columnId: string, index: number) => {
+                                                const column = columns[columnId];
+                                                const columnTasks = column.tasksIds.map((taskId: string) => tasks[taskId]);
 
-                                return <DndColumn
-                                            key={column.id}
-                                            index={index}
-                                            column={column}
-                                            tasks={columnTasks}
-                                            onDeleteColumnClick={this.onDeleteColumnClick}
-                                            onDeleteTaskClick={this.onDeleteTaskClick}
-                                            onTitleUpdate={this.onTitleUpdate}
-                                            onAddTaskClick={this.onAddTaskClick} />
-                            })
-                        }
+                                                return <DndColumn
+                                                            key={column.id}
+                                                            index={index}
+                                                            column={column}
+                                                            tasks={columnTasks}
+                                                            onDeleteColumnClick={this.onDeleteColumnClick}
+                                                            onDeleteTaskClick={this.onDeleteTaskClick}
+                                                            onTitleUpdate={this.onTitleUpdate}
+                                                            onAddTaskClick={this.onAddTaskClick} />
+                                            })
+                                        }
+                                        {provided.placeholder}
+                                    </ColumnContainer>
+                                )}
+                        </Droppable>
                     </DragDropContext>
                     {
                         isAddColumnShow &&

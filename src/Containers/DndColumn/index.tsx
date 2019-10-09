@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import styled, { css, keyframes }  from 'styled-components';
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { DndColumnProps, DndColumnState } from './types';
 import { Task } from '../../Data/types';
@@ -42,7 +42,7 @@ const Column = styled.div`
     flex: 1 1 100%;
     padding: 8px;
     transition: background-color 0.3s ease;
-    background-color: ${(props: any) => props.isDraggingOver ? 'skyblue' : 'white'};
+    background-color: ${(props: any) => props.isDraggingOver ? 'skyblue' : 'inherit'};
     overflow-y: auto;
 `;
 
@@ -198,40 +198,46 @@ export class DndColumn extends React.PureComponent<DndColumnProps, DndColumnStat
         const { columnTitle } = this.state;
 
         return (
-            <Container index={index}>
-                <ColumnHeader>
-                    <Title
-                        contentEditable={true}
-                        onBlur={this.onTitleBlur}
-                        onChange={this.onTitleChange}
-                        value={columnTitle}>
-                    </Title>
-                    <DeleteButton
-                        disabled={isDeleteButtonDisabled}
-                        onClick={this.onDeleteColumnClick} />
-                </ColumnHeader>
-                <TaskAdd onAddTaskClick={onAddTaskClick} columnId={column.id} />
-                <Droppable droppableId={column.id}>
-                    {(provided, shapshot) => (
-                        // @ts-ignore
-                        <Column
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            isDraggingOver={shapshot.isDraggingOver}
-                        >
+            <Draggable draggableId={column.id} index={index}>
+                {(provided) => (
+                <Container
+                    {...provided.draggableProps}
+                    ref={provided.innerRef}>
+                    <ColumnHeader {...provided.dragHandleProps}>
+                        <Title
+                            contentEditable={true}
+                            onBlur={this.onTitleBlur}
+                            onChange={this.onTitleChange}
+                            value={columnTitle}>
+                        </Title>
+                        <DeleteButton
+                            disabled={isDeleteButtonDisabled}
+                            onClick={this.onDeleteColumnClick} />
+                    </ColumnHeader>
+                    <TaskAdd onAddTaskClick={onAddTaskClick} columnId={column.id} />
+                    <Droppable droppableId={column.id} type='tasks'>
+                        {(provided, shapshot) => (
+                            // @ts-ignore
+                            <Column
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                isDraggingOver={shapshot.isDraggingOver}
+                            >
 
-                            {tasks.map((task: Task, index: number) => (
-                                <DndTask
-                                    key={task.id}
-                                    task={task}
-                                    index={index}
-                                    onDeleteTaskClick={this.onDeleteTaskClick} />
-                            ))}
-                            {provided.placeholder}
-                        </Column>
-                    )}
-                </Droppable>
-            </Container>
+                                {tasks.map((task: Task, index: number) => (
+                                    <DndTask
+                                        key={task.id}
+                                        task={task}
+                                        index={index}
+                                        onDeleteTaskClick={this.onDeleteTaskClick} />
+                                ))}
+                                {provided.placeholder}
+                            </Column>
+                        )}
+                    </Droppable>
+                </Container>
+                )}
+            </Draggable>
         )
     }
 }
