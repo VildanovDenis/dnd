@@ -7,7 +7,7 @@ import { createBrowserHistory } from "history";
 import { store } from './Store/index';
 
 import './index.css';
-import App from './App';
+import { App } from './App';
 import * as serviceWorker from './serviceWorker';
 
 const customHistory = createBrowserHistory();

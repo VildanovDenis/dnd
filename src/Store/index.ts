@@ -4,10 +4,13 @@ import thunk from 'redux-thunk';
 
 import { scrumDataReducer } from './Reducer/scrum-data';
 import { State } from './types';
+import { routerDataReducer } from './Reducer/router-data';
 
 const allReducers = combineReducers<State>({
+    routerDataReducer,
     scrumDataReducer
 });
+
 
 // const someActionsListener = (state: State, action: any) => {
 //     // if () {}

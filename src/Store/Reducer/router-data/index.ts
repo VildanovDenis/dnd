@@ -5,7 +5,8 @@ import { RouterDataActions } from '../../Action/router-data/types';
 const initialData: RouterDataState = {
     isModalShow: false,
     route: '',
-    backRoute: ''
+    backRoute: '',
+    location: null
 };
 
 export const routerDataReducer = (

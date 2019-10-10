@@ -119,7 +119,11 @@ export const DndContainer = connect(mapStateToProps, mapDispatchToProps)(
         };
 
         componentDidMount() {
-            this.props.getScrumData(this.props.initialData.dataStatus);
+            if (this.props.initialData.dataStatus === dataStatuses.success) {
+                return
+            } else {
+                this.props.getScrumData(this.props.initialData.dataStatus);
+            }
         }
 
         private onAddColumnClick():void {

@@ -37,7 +37,7 @@ const Container = styled.div<any>`
     // animation: ${FadeInTopAnimation};
 `;
 
-const Column = styled.div`
+const Column = styled.div<{isDraggingOver: boolean}>`
     max-height: calc(100% - 22px - 10px);
     flex: 1 1 100%;
     padding: 8px;
@@ -217,7 +217,6 @@ export class DndColumn extends React.PureComponent<DndColumnProps, DndColumnStat
                     <TaskAdd onAddTaskClick={onAddTaskClick} columnId={column.id} />
                     <Droppable droppableId={column.id} type='tasks'>
                         {(provided, shapshot) => (
-                            // @ts-ignore
                             <Column
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
