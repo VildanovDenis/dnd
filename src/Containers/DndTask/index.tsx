@@ -1,17 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import { Link, withRouter } from 'react-router-dom';
 
-import { DndTaskProps, DndTaskState } from './types';
-import { ReduxDispatch } from '../../Store/types';
-
-import { setRouterData } from '../../Store/Action/router-data';
-
 import { DeleteButton } from '../DndColumn';
-import { RouterDataState } from '../../Store/Reducer/router-data/types';
 
 const Container = styled.div<{isDragging: boolean}>`
     display: flex;
@@ -87,39 +79,19 @@ const RouterLink = styled(Link)`
     }
 `;
 
-const mapDispatchToProps = (dispatch: ReduxDispatch) => (
-    bindActionCreators(
-        {
-            setRouterData: setRouterData
-        }, dispatch
-    )
-)
-
 //DndTaskProps, DndTaskState
 
-export const DndTask = connect(null, mapDispatchToProps)(withRouter(
+export const DndTask = withRouter(
     class DndTask extends React.PureComponent<any, any> {
         constructor(props: any) {
             super(props);
 
             this.onDeleteTaskClick = this.onDeleteTaskClick.bind(this);
-            this.onLinkClick = this.onLinkClick.bind(this);
         };
 
         onDeleteTaskClick(): void {
             this.props.onDeleteTaskClick(this.props.task.id);
         };
-
-        onLinkClick(): void {
-            const { location } = this.props;
-
-            const routerData: RouterDataState = {
-                isModalShow: true,
-                background: location
-            };
-
-            this.props.setRouterData(routerData);
-        }
 
         public render() {
             const { task, index } = this.props;
@@ -152,4 +124,4 @@ export const DndTask = connect(null, mapDispatchToProps)(withRouter(
             )
         }
     }
-));
+);

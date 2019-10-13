@@ -1,15 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
 import { Portal } from '../../hoc/Portal';
 
-import { setRouterData } from '../../Store/Action/router-data';
-
-import { ReduxDispatch, State } from '../../Store/types';
-import { RouterDataState } from '../../Store/Reducer/router-data/types';
+import { State } from '../../Store/types';
 
 export const ModalContainer = styled.div`
     position: fixed;
@@ -45,20 +41,11 @@ export const ModalContent = styled.div`
 
 const mapStateToProps = (state: State) => {
     return {
-        routerData: state.routerDataReducer,
         srumData: state.scrumDataReducer
     }
 }
 
-const mapDispatchToProps = (dispatch: ReduxDispatch) => (
-    bindActionCreators(
-        {
-            setRouterData: setRouterData
-        }, dispatch
-    )
-)
-
-export const TaskModal = connect(mapStateToProps, mapDispatchToProps)(
+export const TaskModal = connect(mapStateToProps, null)(
     class DndTaskModal extends React.PureComponent<any, any> {
         constructor(props: any) {
             super(props);
@@ -66,22 +53,12 @@ export const TaskModal = connect(mapStateToProps, mapDispatchToProps)(
             this.state = {
                 taskId: ''
             };
-
-            this.onLinkClick = this.onLinkClick.bind(this);
         }
 
         componentDidMount() {
             this.setState({
                 taskId: this.props.match.params.id
             });
-        }
-
-        onLinkClick() {
-            const newRouterData: RouterDataState = {
-                isModalShow: false
-            };
-
-            this.props.setRouterData(newRouterData)
         }
 
         render() {
@@ -91,7 +68,7 @@ export const TaskModal = connect(mapStateToProps, mapDispatchToProps)(
                     <ModalContainer>
                         <ModalContent>
                             <h3>tasktask</h3>
-                            <Link to='/' onClick={this.onLinkClick}>123</Link>
+                            <Link to='/'>123</Link>
                         </ModalContent>
                         <ModalBg to='/' />
                     </ModalContainer>
