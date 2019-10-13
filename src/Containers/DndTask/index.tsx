@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { DndTaskProps, DndTaskState } from './types';
 import { ReduxDispatch } from '../../Store/types';
@@ -95,9 +95,11 @@ const mapDispatchToProps = (dispatch: ReduxDispatch) => (
     )
 )
 
-export const DndTask = connect(null, mapDispatchToProps)(
-    class DndTask extends React.PureComponent<DndTaskProps, DndTaskState> {
-        constructor(props: DndTaskProps) {
+//DndTaskProps, DndTaskState
+
+export const DndTask = connect(null, mapDispatchToProps)(withRouter(
+    class DndTask extends React.PureComponent<any, any> {
+        constructor(props: any) {
             super(props);
 
             this.onDeleteTaskClick = this.onDeleteTaskClick.bind(this);
@@ -109,8 +111,11 @@ export const DndTask = connect(null, mapDispatchToProps)(
         };
 
         onLinkClick(): void {
+            const { location } = this.props;
+
             const routerData: RouterDataState = {
-                isModalShow: true
+                isModalShow: true,
+                background: location
             };
 
             this.props.setRouterData(routerData);
@@ -118,6 +123,8 @@ export const DndTask = connect(null, mapDispatchToProps)(
 
         public render() {
             const { task, index } = this.props;
+            const to = `/task/${task.id}`;
+            const state = { background: this.props.location };
 
             return (
                 <Draggable draggableId={task.id} index={index}>
@@ -132,7 +139,10 @@ export const DndTask = connect(null, mapDispatchToProps)(
                                     <CroppedSpan>
                                         {task.content}
                                     </CroppedSpan>
-                                    <RouterLink to={`/task/${task.id}`} onClick={this.onLinkClick}/>
+                                    <RouterLink to={{
+                                            pathname: to,
+                                            state: state
+                                        }}/>
                                     <DeleteButton
                                         type='button'
                                         onClick={this.onDeleteTaskClick} />
@@ -142,4 +152,4 @@ export const DndTask = connect(null, mapDispatchToProps)(
             )
         }
     }
-)
+));

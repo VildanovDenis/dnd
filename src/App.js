@@ -15,6 +15,8 @@ const mapStateToProps = (state) => ({
 
 export const App = connect(mapStateToProps, null)(
   function App(props) {
+    const location = useLocation();
+    const background = location.state && location.state.background;
     
     return (
       <div className="App">
@@ -33,10 +35,11 @@ export const App = connect(mapStateToProps, null)(
           </a>
         </header> */}
         <main>
-          <Switch>
+          <Switch location={background || location}>
             <Route exact path='/' component={DndContainer} />
-            <Route path='/task/:id' component={props.routerData.isModalShow ? TaskModal : Task} />
+            <Route path='/task/:id' component={Task} />
           </Switch>
+          {background && <Route path='/task/:id' component={TaskModal} />}
         </main>
       </div>
     );

@@ -6,7 +6,7 @@ const initialData: RouterDataState = {
     isModalShow: false,
     route: '',
     backRoute: '',
-    location: null
+    background: null
 };
 
 export const routerDataReducer = (
