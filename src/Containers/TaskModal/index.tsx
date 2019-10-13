@@ -21,9 +21,10 @@ export const ModalBg = styled(Link)`
     left: 0;
     width: 100%;
     height: 100%;
-    // background-color: red;
-    // opacity: 0.5;
+    background-color: white;
+    opacity: 0.5;
     z-index: 10;
+    cursor: initial;
 `;
 
 export const ModalContent = styled.div`
@@ -53,12 +54,21 @@ export const TaskModal = connect(mapStateToProps, null)(
             this.state = {
                 taskId: ''
             };
+
+            this.onBackClick = this.onBackClick.bind(this);
         }
 
         componentDidMount() {
             this.setState({
                 taskId: this.props.match.params.id
             });
+        }
+
+        onBackClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
+            e.preventDefault();
+            e.stopPropagation();
+            this.props.history.goBack();
+
         }
 
         render() {
@@ -68,9 +78,9 @@ export const TaskModal = connect(mapStateToProps, null)(
                     <ModalContainer>
                         <ModalContent>
                             <h3>tasktask</h3>
-                            <Link to='/'>123</Link>
+                            <Link to='/' onClick={this.onBackClick}>Назад</Link>
                         </ModalContent>
-                        <ModalBg to='/' />
+                        <ModalBg to='/' onClick={this.onBackClick}/>
                     </ModalContainer>
                 </Portal>
             )

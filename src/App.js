@@ -13,6 +13,8 @@ export const App = connect(null, null)(
   function App() {
     const location = useLocation();
     const background = location.state && location.state.background;
+    console.error(location);
+    console.error(':bg', background);
     
     return (
       <div className="App">

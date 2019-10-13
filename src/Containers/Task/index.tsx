@@ -6,7 +6,7 @@ export class Task extends React.PureComponent<any, any> {
         return (
             <div style={{background: 'red'}}>
                 task task task
-                <Link to='/'>123</Link>
+                <Link to='/'>go to main</Link>
             </div>
         )
     }
