@@ -30,4 +30,4 @@ export const store = createStore(
 )
 
 // some selector here
-export const getState = (reduxState: State) => reduxState.scrumDataReducer;
+export const getState = (reduxState: State): State => reduxState;

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Portal } from '../../hoc/Portal';
 
 import { State } from '../../Store/types';
+import { dataStatuses } from '../../Data/dataStatuses';
 
 export const ModalContainer = styled.div`
     position: fixed;
@@ -42,7 +43,7 @@ export const ModalContent = styled.div`
 
 const mapStateToProps = (state: State) => {
     return {
-        srumData: state.scrumDataReducer
+        scrumData: state.scrumDataReducer
     }
 }
 
@@ -72,12 +73,26 @@ export const TaskModal = connect(mapStateToProps, null)(
         }
 
         render() {
+            const { data, dataStatus } = this.props.scrumData;
+            const task = data.tasks[this.state.taskId];
+
+            if (task === undefined || dataStatus === dataStatuses.fetching) {
+                debugger
+                return <Portal>
+                            <ModalContainer>
+                                <ModalContent>
+                                    <span>Идет загрузка</span>
+                                </ModalContent>
+                                <ModalBg to='/' onClick={this.onBackClick}/>
+                            </ModalContainer>
+                        </Portal>
+            }
 
             return (
                 <Portal>
                     <ModalContainer>
                         <ModalContent>
-                            <h3>tasktask</h3>
+                            <h3>{task.content}</h3>
                             <Link to='/' onClick={this.onBackClick}>Назад</Link>
                         </ModalContent>
                         <ModalBg to='/' onClick={this.onBackClick}/>

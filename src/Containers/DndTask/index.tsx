@@ -4,6 +4,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { Link, withRouter } from 'react-router-dom';
 
 import { DeleteButton } from '../DndColumn';
+import { DndTaskProps, DndTaskState } from './types';
 
 const Container = styled.div<{isDragging: boolean}>`
     display: flex;
@@ -79,11 +80,9 @@ const RouterLink = styled(Link)`
     }
 `;
 
-//DndTaskProps, DndTaskState
-
 export const DndTask = withRouter(
-    class DndTask extends React.PureComponent<any, any> {
-        constructor(props: any) {
+    class DndTask extends React.PureComponent<DndTaskProps, DndTaskState> {
+        constructor(props: DndTaskProps) {
             super(props);
 
             this.onDeleteTaskClick = this.onDeleteTaskClick.bind(this);
