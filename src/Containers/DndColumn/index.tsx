@@ -25,6 +25,7 @@ const FadeInTopAnimation = (props: any) =>
     `;
 
 const Container = styled.div<any>`
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 250px;
@@ -40,7 +41,8 @@ const Container = styled.div<any>`
 const Column = styled.div<{isDraggingOver: boolean}>`
     max-height: calc(100% - 22px - 10px);
     flex: 1 1 100%;
-    padding: 8px;
+    margin: 8px 0 11px;
+    padding: 0 11px;
     transition: background-color 0.3s ease;
     background-color: ${(props: any) => props.isDraggingOver ? 'skyblue' : 'inherit'};
     overflow-y: auto;

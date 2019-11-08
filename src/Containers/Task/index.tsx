@@ -8,6 +8,7 @@ import { State, ReduxDispatch } from '../../Store/types';
 
 import { getScrumData } from '../../Store/Action/scrum-data';
 import { dataStatuses } from '../../Data/dataStatuses';
+import { TaskProps, TaskState, TaskDispatchProps, TaskStateProps } from './types';
 
 const TaskContainer = styled.div`
     display: flex;
@@ -22,21 +23,23 @@ const TaskContent = styled.div`
     padding: 8px;
 `;
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: State): TaskStateProps => {
     return {
         scrumData: state.scrumDataReducer
     }
 }
 
-const mapDispatchToProps = (dispatch: ReduxDispatch): any => (
-    bindActionCreators({
-        getScrumData: getScrumData
-    }, dispatch)
+const mapDispatchToProps = (dispatch: ReduxDispatch): TaskDispatchProps => (
+    bindActionCreators(
+        {
+            getScrumData: getScrumData
+        }, dispatch
+    )
 )
 
 export const Task = connect(mapStateToProps, mapDispatchToProps)(
-    class Task extends React.PureComponent<any, any> {
-        constructor(props: any) {
+    class Task extends React.PureComponent<TaskProps, TaskState> {
+        constructor(props: TaskProps) {
             super(props);
 
             this.state = {
