@@ -7,6 +7,7 @@ import { Portal } from '../../hoc/Portal';
 
 import { State } from '../../Store/types';
 import { dataStatuses } from '../../Data/dataStatuses';
+import { TaskModalState, TaskModalProps } from './types';
 
 export const ModalContainer = styled.div`
     position: fixed;
@@ -48,8 +49,8 @@ const mapStateToProps = (state: State) => {
 }
 
 export const TaskModal = connect(mapStateToProps, null)(
-    class DndTaskModal extends React.PureComponent<any, any> {
-        constructor(props: any) {
+    class DndTaskModal extends React.PureComponent<TaskModalProps, TaskModalState> {
+        constructor(props: TaskModalProps) {
             super(props);
 
             this.state = {
@@ -60,9 +61,13 @@ export const TaskModal = connect(mapStateToProps, null)(
         }
 
         componentDidMount() {
-            this.setState({
-                taskId: this.props.match.params.id
-            });
+            const { params } = this.props.match;
+
+            if (params.id) {
+                this.setState({
+                    taskId: params.id
+                });
+            }
         }
 
         onBackClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
@@ -77,7 +82,6 @@ export const TaskModal = connect(mapStateToProps, null)(
             const task = data.tasks[this.state.taskId];
 
             if (task === undefined || dataStatus === dataStatuses.fetching) {
-                debugger
                 return <Portal>
                             <ModalContainer>
                                 <ModalContent>
