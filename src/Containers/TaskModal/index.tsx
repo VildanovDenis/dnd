@@ -85,7 +85,18 @@ export const TaskModal = connect(mapStateToProps, null)(
                 return <Portal>
                             <ModalContainer>
                                 <ModalContent>
-                                    <span>Идет загрузка</span>
+                                    <span>Loading...</span>
+                                </ModalContent>
+                                <ModalBg to='/' onClick={this.onBackClick}/>
+                            </ModalContainer>
+                        </Portal>
+            }
+
+            if (task === undefined || dataStatus === dataStatuses.fetching) {
+                return <Portal>
+                            <ModalContainer>
+                                <ModalContent>
+                                <p>This task is not available.</p>
                                 </ModalContent>
                                 <ModalBg to='/' onClick={this.onBackClick}/>
                             </ModalContainer>
@@ -97,7 +108,7 @@ export const TaskModal = connect(mapStateToProps, null)(
                     <ModalContainer>
                         <ModalContent>
                             <h3>{task.content}</h3>
-                            <Link to='/' onClick={this.onBackClick}>Назад</Link>
+                            <Link to='/' onClick={this.onBackClick}>Go back</Link>
                         </ModalContent>
                         <ModalBg to='/' onClick={this.onBackClick}/>
                     </ModalContainer>

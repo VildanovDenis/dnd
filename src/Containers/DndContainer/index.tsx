@@ -196,23 +196,24 @@ export const DndContainer = connect(mapStateToProps, mapDispatchToProps)(
             const { data } = this.props.initialData;
             const { tasks } = data;
 
-            const tasksLength: number = Object.keys(tasks).length;
+            const lastTaskKey = Object.keys(tasks)[Object.keys(tasks).length - 1];
+            const taskId: number = Number(tasks[lastTaskKey].id.split('-')[1]);
 
             const newTask: Task = {
-                id: `Task-${tasksLength}`,
+                id: `Task-${taskId + 1}`,
                 content: taskContent
             };
             
             const newColumn: Column = {
                 ...data.columns[columnId],
-                tasksIds: [`Task-${tasksLength}`, ...data.columns[columnId].tasksIds] 
+                tasksIds: [`Task-${taskId + 1}`, ...data.columns[columnId].tasksIds] 
             };
 
             const newData = {
                 ...data,
                 tasks: {
                     ...data.tasks,
-                    [`Task-${tasksLength}`]: newTask
+                    [`Task-${taskId + 1}`]: newTask
                 },
                 columns: {
                     ...data.columns,
@@ -223,7 +224,7 @@ export const DndContainer = connect(mapStateToProps, mapDispatchToProps)(
             this.props.setScrumData(newData);
         };
 
-        onTitleUpdate(columnId: string, title: string): void {
+        public onTitleUpdate(columnId: string, title: string): void {
             const { data } = this.props.initialData;
 
             const newData = {
