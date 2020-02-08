@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/dnd/static/css/main.b8c8cc5d.chunk.css",
-    "main.js": "/dnd/static/js/main.697baaa2.chunk.js",
-    "main.js.map": "/dnd/static/js/main.697baaa2.chunk.js.map",
+    "main.js": "/dnd/static/js/main.9f3460da.chunk.js",
+    "main.js.map": "/dnd/static/js/main.9f3460da.chunk.js.map",
     "runtime-main.js": "/dnd/static/js/runtime-main.65b67893.js",
     "runtime-main.js.map": "/dnd/static/js/runtime-main.65b67893.js.map",
     "static/js/2.3352558a.chunk.js": "/dnd/static/js/2.3352558a.chunk.js",
     "static/js/2.3352558a.chunk.js.map": "/dnd/static/js/2.3352558a.chunk.js.map",
     "index.html": "/dnd/index.html",
-    "precache-manifest.d30b779a0fe380942e6eebd5c95ac1e6.js": "/dnd/precache-manifest.d30b779a0fe380942e6eebd5c95ac1e6.js",
+    "precache-manifest.2182acfaedc9185bea9225fd71ecf6e0.js": "/dnd/precache-manifest.2182acfaedc9185bea9225fd71ecf6e0.js",
     "service-worker.js": "/dnd/service-worker.js",
     "static/css/main.b8c8cc5d.chunk.css.map": "/dnd/static/css/main.b8c8cc5d.chunk.css.map"
   }
