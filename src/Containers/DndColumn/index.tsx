@@ -28,6 +28,7 @@ const Container = styled.div<any>`
     position: relative;
     display: flex;
     flex-direction: column;
+    min-width: 200px;
     width: 250px;
     max-height: 100%;
     margin: 8px;
@@ -69,10 +70,17 @@ const Title = styled.input`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    will-change: color;
+    transition: color 0.3s;
+    
+    :hover {
+        color: rgba(0, 0, 0, 0.6);
+    }
 
     :focused {
         text-overflow: clip;
         overflow: visible;
+        color: rgba(0, 0, 0, 1);
     }
 `;
 
@@ -84,6 +92,7 @@ export const DeleteButton = styled.button`
     margin: 0;
     border: 0;
     background-color: transparent;
+    cursor: pointer;
 
     ::before {
         content: '';
@@ -117,22 +126,24 @@ export const DeleteButton = styled.button`
         background-color: lightcoral;
     }
 
+    :disabled {
+        cursor: not-allowed;
+    }
+
     :disabled::after {
-        opacity: 0.5;
+        background-color: #e6e6e6;
     }
 
     :disabled::before {
-        opacity: 0.5;
+        background-color: #e6e6e6;
     }
 
     :disabled:hover::after {
-        opacity: 0.5;
-        background-color: lightgray;
+        background-color: #e6e6e6;
     }
 
     :disabled:hover::before{
-        opacity: 0.5;
-        background-color: lightgray;
+        background-color: #e6e6e6;
     }
 `;
 

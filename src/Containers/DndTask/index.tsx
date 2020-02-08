@@ -24,6 +24,7 @@ const Container = styled.div<{isDragging: boolean}>`
 const CroppedSpan = styled.span`
     width: 70%;
     text-align: left;
+    line-height: 22px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -72,11 +73,11 @@ const RouterLink = styled(Link)`
     }
 
     &:hover::after {
-        border-bottom: 4px solid lightcoral;
+        border-bottom: 4px solid green;
     }
 
     &:hover::before {
-        border-top: 4px solid lightcoral;
+        border-top: 4px solid green;
     }
 `;
 

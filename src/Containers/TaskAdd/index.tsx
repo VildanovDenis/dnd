@@ -16,15 +16,35 @@ const Input = styled.input`
     padding: 5px;
     border: 1px solid lightgray;
     border-radius: 4px;
+    will-change: border-color;
+    transition: 0.3s;
+
+    :hover {
+        border-color: gray;
+    }
 `;
 
 const Button = styled.button`
     padding: 5px;
     border: 1px solid lightgray;
     border-radius: 4px;
+    will-change: border-color;
+    transition: 0.3s;
+
+    :hover {
+        border-color: gray;
+    }
+
+    :active {
+        border-color: black;
+    }
 
     :disabled {
         opacity: 0.7;
+
+        :hover {
+            border-color: lightgray;
+        }
     }
 `;
 
